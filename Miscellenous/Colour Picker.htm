@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Colour Picker</title>
+<script>
+function checkRange(val,Min,Max){
+	if(val<Min || val>Max){
+		alert("Please enter a value greater than "+Min+" and less than"+Max+" !");
+	}
+}
+
+function colourSelectOption(type){
+	if(type == 'rgb'){
+		document.getElementById("rgb").style.display = "block";
+		document.getElementById("picker").style.display = "none";
+	}
+	else if(type == 'picker'){
+		document.getElementById("picker").style.display = "block";
+		document.getElementById("rgb").style.display = "none";
+	}
+	else{
+		return;	
+	}
+	optionType = type;
+}
+
+function colourOutput(type){
+	if(type == 'rgb'){
+		document.getElementById("colourOutput").style.backgroundColor = "rgb("+document.getElementById("red").value+","+document.getElementById("green").value+","+document.getElementById("blue").value+")";	
+	}
+	else if(type == 'picker'){
+		document.getElementById("colourOutput").style.backgroundColor = document.getElementById("colourSelect").value;
+	}
+	else{	
+	}
+}	
+</script>
+</head>
+<body>
+<div>
+<b>How do you want to select your colour?</b>
+<br>
+<input type="radio" value="rgb" id="rgbOption" name="colourSelectOption" onClick="colourSelectOption('rgb')" /> <label for="rgbOption">RGB</label><br>
+<input name="colourSelectOption" type="radio" id="pickerOption" onClick="colourSelectOption('picker')" value="picker" checked /> <label for="pickerOption">Colour Picker</label><br>
+</div>
+<form>
+<fieldset id="rgb" style="display:none;">
+    <legend>Select your RGB colour below using the sliders: </legend>
+    R: 0 <input type="range" name="redSlider" min="0" max="255" step="1" value="0" oninput="red.value = parseInt(this.value); checkRange(this.value,0,255);" /> 255  <input id="red" type="number" min="0" max="255" name="red" value="0" oninput="redSlider.value=parseInt(this.value)" step="1" maxlength="1" width="2" onKeyUp="checkRange(this.value,0,255);" /><br>
+	G: 0 <input type="range" name="greenSlider" min="0" max="255" step="1" value="0" oninput="green.value = parseInt(this.value); checkRange(this.value,0,255);" /> 255  <input id="green" type="number" min="0" max="255" name="green" value="0" oninput="greenSlider.value=parseInt(this.value)" step="1" maxlength="1" width="2" onKeyUp="checkRange(this.value,0,255);" /><br>
+    B: 0 <input type="range" name="blueSlider" min="0" max="255" step="1" value="0" oninput="blue.value = parseInt(this.value); checkRange(this.value,0,255);" /> 255  <input id="blue" type="number" min="0" max="255" name="blue" value="0" oninput="blueSlider.value=parseInt(this.value)" step="1" maxlength="1" width="2" onKeyUp="checkRange(this.value,0,255);" /><br>
+    <input type="button" onClick="colourOutput('picker');" value="Confirm Colour">
+</fieldset>
+
+<fieldset id="picker">
+    <legend>Select your colour below using the colour picker:</legend>
+    <input type="color" name="colorSelect" id="colourSelect" list="colours">
+    <datalist id="colours">
+        <option>#ff0000</option> 
+        <option>#0000ff</option> 
+        <option>#00ff00</option> 
+        <option>#ffff00</option> 
+        <option>#00ffff</option> 
+    </datalist>
+	<input type="button" onClick="colourOutput('picker');" value="Confirm Colour">
+</fieldset>
+</form>
+Selected Colour: <div id="colourOutput" style="width:2em;height:2em;border:1px solid #000"></div>
+</body>
+</html>
