@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Search and Highlight</title>
+<style>
+div.highlighted{
+	background-color:#FF3;	
+	display:inline;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script>
+highlightedText = new Array();
+
+function searchAndHighlight(event,val){
+	if(event.keyCode != 13 || val == '' || val == ' '){
+		return;
+	}
+	
+	if(document.getElementById("clearAll").checked){
+		clearAll();
+	}
+
+	var replaceVal=new RegExp(val,"g");
+	
+	if(replaceVal.test($('body').html())){
+		highlightedText.push(val);
+	}
+	else{
+		return;	
+	}
+	
+	var replace_str = $('body').html().replace(replaceVal, '<div class="highlighted">'+val+'</div>'); 
+	$('body').html(replace_str);
+}
+
+function clearAll(){
+	for(a=0;a<highlightedText.length;a++){
+		var replaceValue = new RegExp('<div class="highlighted">'+highlightedText[a]+"</div>","g");
+		var replace_str = $('body').html().replace(replaceValue, highlightedText[a]); 
+		$('body').html(replace_str);
+	}
+	
+}
+</script>
+</head>
+<body>
+<input type="text" placeholder="What words do you want to highlight?" onkeyup="searchAndHighlight(event,this.value);"  style="width:100px;"/>
+<input type="checkbox" name="clearAll" id="clearAll" />
+<label for="clearAll">Clear highlight after search</label>
+<div>
+The panda (Ailuropoda melanoleuca, lit. "black and white cat-foot"), also known as the giant panda to distinguish it from the unrelated red panda, is a bear native to central-western and south western China. It is easily recognized by its large, distinctive black patches around the eyes, over the ears, and across its round body. Though it belongs to the order Carnivora, the panda's diet is 99% bamboo. Pandas in the wild will occasionally eat other grasses, wild tubers, or even meat in the form of birds, rodents or carrion. In captivity they may receive honey, eggs, fish, yams, shrub leaves, oranges, or bananas along with specially prepared food. The giant panda lives in a few mountain ranges in central China, mainly in Sichuan province, but also in the Shaanxi and Gansu provinces. As a result of farming, deforestation and other development, the panda has been driven out of the lowland areas where it once lived.
+The panda is a conservation reliant endangered species. A 2007 report shows 239 pandas living in captivity inside China and another 27 outside the country. Wild population estimates vary; one estimate shows that there are about 1,590 individuals living in the wild, while a 2006 study via DNA analysis estimated that this figure could be as high as 2,000 to 3,000. Some reports also show that the number of pandas in the wild is on the rise. However, the IUCN does not believe there is enough certainty yet to reclassify the species from Endangered to Vulnerable.
+
+While the dragon has often served as China's national emblem, internationally the panda appears at least as commonly. As such, it is becoming widely used within China in international contexts, for example the five Fuwa mascots of the Beijing Olympics.
+</div>
+</body>
+</html>
